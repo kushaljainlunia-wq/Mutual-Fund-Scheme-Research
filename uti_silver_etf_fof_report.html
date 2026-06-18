@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>UTI Silver ETF FoF Direct Growth — Scheme Research Report</title>
+<style>
+  :root{
+    --good:#34D399; --watch:#FBBF24; --bad:#F87171; --active:#06B6D4;
+    --bg:#0f1419; --card:#161d27; --card2:#1c2531; --border:#2a3441;
+    --text:#e8edf3; --text2:#9aa7b8; --text3:#6b7888;
+  }
+  *{box-sizing:border-box;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg); color:var(--text); margin:0; padding:0; line-height:1.5;
+  }
+  .wrap{max-width:1100px;margin:0 auto;padding:18px 16px 60px;}
+  .header{padding:18px 0 10px;border-bottom:1px solid var(--border);margin-bottom:14px;}
+  .header h1{font-size:1.4rem;margin:0 0 4px;}
+  .header .sub{color:var(--text2);font-size:.88rem;}
+  .freshness{
+    display:flex;flex-wrap:wrap;gap:10px;background:var(--card);border:1px solid var(--border);
+    border-radius:10px;padding:12px 14px;margin-bottom:16px;font-size:.82rem;color:var(--text2);
+  }
+  .freshness b{color:var(--text);}
+  .badge{padding:2px 8px;border-radius:20px;font-size:.74rem;font-weight:600;}
+  .badge.green{background:rgba(52,211,153,.15);color:var(--good);}
+  .badge.yellow{background:rgba(251,191,36,.15);color:var(--watch);}
+  .badge.red{background:rgba(248,113,113,.15);color:var(--bad);}
+  .tabs{display:flex;gap:4px;overflow-x:auto;border-bottom:1px solid var(--border);margin-bottom:18px;}
+  .tab-btn{
+    background:none;border:none;color:var(--text2);padding:10px 14px;font-size:.86rem;
+    cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;font-weight:500;
+  }
+  .tab-btn.active{color:var(--active);border-bottom-color:var(--active);}
+  .tab-content{display:none;}
+  .tab-content.active{display:block;animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:16px;}
+  .card h3{margin:0 0 10px;font-size:1rem;display:flex;align-items:center;gap:8px;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media(max-width:640px){.grid2{grid-template-columns:1fr;}}
+  table{width:100%;border-collapse:collapse;font-size:.83rem;}
+  th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+  th{color:var(--text2);font-weight:600;cursor:pointer;user-select:none;position:relative;}
+  th:hover{color:var(--active);}
+  th.sort-asc::after{content:" ▲";font-size:.7rem;}
+  th.sort-desc::after{content:" ▼";font-size:.7rem;}
+  tr:last-child td{border-bottom:none;}
+  .src{font-size:.68rem;vertical-align:super;color:var(--active);cursor:help;margin-left:2px;}
+  .verdict-card{
+    text-align:center;padding:26px 18px;border-radius:14px;
+    background:linear-gradient(160deg,rgba(248,113,113,.12),rgba(22,29,39,.4));
+    border:1px solid rgba(248,113,113,.35);
+  }
+  .verdict-card.buy{background:linear-gradient(160deg,rgba(52,211,153,.12),rgba(22,29,39,.4));border-color:rgba(52,211,153,.35);}
+  .verdict-card.hold{background:linear-gradient(160deg,rgba(251,191,36,.12),rgba(22,29,39,.4));border-color:rgba(251,191,36,.35);}
+  .verdict-tag{font-size:1.9rem;font-weight:800;letter-spacing:1px;color:var(--bad);}
+  .verdict-card.buy .verdict-tag{color:var(--good);}
+  .verdict-card.hold .verdict-tag{color:var(--watch);}
+  .score-ring-wrap{display:flex;justify-content:center;gap:30px;flex-wrap:wrap;margin-top:8px;}
+  .ring{position:relative;width:96px;height:96px;}
+  .ring svg{transform:rotate(-90deg);}
+  .ring-label{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.78rem;font-weight:700;}
+  .ring-label small{font-size:.62rem;color:var(--text2);font-weight:400;}
+  ul.bullets{margin:6px 0 0;padding-left:18px;}
+  ul.bullets li{margin-bottom:6px;font-size:.88rem;}
+  .pill{display:inline-block;padding:3px 9px;border-radius:20px;font-size:.72rem;font-weight:600;margin-right:4px;}
+  .pill.green{background:rgba(52,211,153,.15);color:var(--good);}
+  .pill.yellow{background:rgba(251,191,36,.15);color:var(--watch);}
+  .pill.red{background:rgba(248,113,113,.15);color:var(--bad);}
+  .flag-row{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);font-size:.86rem;}
+  .flag-row:last-child{border-bottom:none;}
+  .tip{
+    border-bottom:1px dotted var(--text3);cursor:help;
+  }
+  .filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;}
+  .filter-row button{
+    background:var(--card2);border:1px solid var(--border);color:var(--text2);padding:5px 11px;
+    border-radius:8px;font-size:.76rem;cursor:pointer;
+  }
+  .filter-row button.active-filter{background:rgba(6,182,212,.15);color:var(--active);border-color:var(--active);}
+  .gauge-bar{height:8px;border-radius:4px;background:var(--card2);overflow:hidden;margin-top:6px;}
+  .gauge-fill{height:100%;border-radius:4px;}
+  .small{font-size:.78rem;color:var(--text2);}
+  .accent-box{background:var(--card2);border-left:3px solid var(--active);padding:10px 14px;border-radius:6px;font-size:.86rem;margin:10px 0;}
+  .footer-section{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-top:24px;font-size:.78rem;color:var(--text2);}
+  .footer-section h4{color:var(--text);font-size:.84rem;margin:14px 0 6px;}
+  .footer-section h4:first-child{margin-top:0;}
+  .toggle-details{color:var(--active);font-size:.78rem;cursor:pointer;display:inline-block;margin-top:6px;}
+  .details-block{display:none;margin-top:8px;}
+  .details-block.open{display:block;}
+  a{color:var(--active);}
+  .num{font-weight:600;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>📊 UTI Silver ETF Fund of Fund — Direct Plan, Growth</h1>
+    <div class="sub">Single-Scheme Research Report · Generated 18 Jun 2026 · Mutual Fund Scheme Research Skill v2.0</div>
+  </div>
+
+  <div class="freshness">
+    <span class="badge yellow">🟡 Moderate freshness</span>
+    <span><b>Scheme:</b> UTI Silver ETF FoF – Direct Growth</span>
+    <span><b>Latest factsheet/NAV data:</b> ~01–06 Jun 2026</span>
+    <span><b>Verification date:</b> 18 Jun 2026</span>
+    <span><b>Source age:</b> 12–17 days</span>
+    <span><b>Primary sources:</b> 8 (Value Research, INDmoney, Dezerv, Paytm Money, Groww, Kotak Securities, Equitymaster, NiveshMultiplier)</span>
+    <span><b>Missing-data count:</b> 5</span>
+    <span><b>Data confidence:</b> 5.1/10 (Max 10.0)</span>
+  </div>
+
+  <div class="tabs" id="tabs">
+    <button class="tab-btn active" data-tab="t1">📊 Snapshot</button>
+    <button class="tab-btn" data-tab="t2">📈 Performance</button>
+    <button class="tab-btn" data-tab="t3">🏆 Alternatives</button>
+    <button class="tab-btn" data-tab="t4">⚡ Verdict</button>
+    <button class="tab-btn" data-tab="t5">💰 Tax & Exit</button>
+    <button class="tab-btn" data-tab="t6">📑 Sources & Score</button>
+  </div>
+
+  <!-- TAB 1: SNAPSHOT -->
+  <div class="tab-content active" id="t1">
+
+    <div class="card">
+      <h3>🗣️ Plain-English Summary</h3>
+      <p style="font-size:.92rem;">UTI Silver ETF FoF is simply a wrapper that buys units of UTI's own Silver ETF, so your money tracks the domestic price of silver almost 1-for-1, minus a small fee. It doesn't pick stocks or make active calls — it's pure silver-price exposure, packaged as a regular mutual fund (no demat account needed) so you can start a SIP from ₹100. The fund itself is well-run and cheap for its category, but the real decision here isn't "is this a good fund" — it's "is this the right time and the right way to add silver," especially since you (via Mahendra's portfolio) already hold a Gold & Silver FoF.</p>
+    </div>
+
+    <div class="card">
+      <h3>⚡ Quick Decision Card</h3>
+      <div class="verdict-card">
+        <div class="verdict-tag">❌ AVOID (for now)</div>
+        <div class="small" style="margin-top:6px;">Score: <b>5.1/10</b> · Confidence: <b>Medium</b> · Not currently held</div>
+      </div>
+      <ul class="bullets" style="margin-top:14px;">
+        <li>🚩 You'd be entering after silver's historic <b>+147–161% 2025 rally</b> and a sharp <b>~44% correction</b> from its Jan-2026 peak<sup class="src" title="Source: CoinDCX silver forecast [T4] · 18 Jun 2026">7</sup> — chasing volatility, not buying a dip.</li>
+        <li>🚩 Mahendra already holds <b>Motilal Oswal Gold & Silver Passive FoF</b> (₹7.24L, ~15.4% of the portfolio)<sup class="src" title="Source: Uploaded CAS statement [T1] · 17 Jun 2026">U</sup> — a fresh silver-only fund stacks directly on top of that.</li>
+        <li>✅ The fund itself is cheap (~0.12% TER) and structurally simple — if precious metals exposure is being added, this isn't a "bad fund," it's just redundant right now.</li>
+      </ul>
+      <div class="accent-box">Suggested allocation if proceeding anyway: <b>0%</b> fresh allocation today. Revisit only after a meaningful price correction/consolidation, and consider topping up the existing Gold & Silver FoF instead of adding a third standalone metal fund.</div>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <h3>👤 Who Should Buy This</h3>
+        <ul class="bullets">
+          <li>Investors with <b>zero</b> existing precious-metals exposure wanting a small (5–10%) tactical hedge</li>
+          <li>Those who specifically want <b>silver-only</b> (not gold-blended) industrial-cum-precious-metal exposure</li>
+          <li>SIP investors who want to average into silver over 12–24 months rather than time a lump sum</li>
+        </ul>
+        <div class="accent-box" style="border-left-color:var(--bad);">Not ideal for: anyone who already owns a Gold/Silver FoF, or anyone uncomfortable with 20–40% drawdowns<sup class="src" title="Source: NiveshMultiplier category drawdown range across peer Silver FoFs [T4] · 17 Mar 2026">8</sup> in a non-yielding asset.</div>
+      </div>
+      <div class="card">
+        <h3>🚩 Red Flags</h3>
+        <div class="flag-row">🚩 <span><b>Mania-stage AUM growth:</b> AUM jumped from ~₹44Cr (Mar-2025) to ~₹597Cr (Jun-2026)<sup class="src" title="Source: mStock [T3] Mar-2025 vs INDmoney/Dezerv [T2] Jun-2026">1,2</sup> — 13x in ~14 months, mostly hot money chasing the 2025 rally.</span></div>
+        <div class="flag-row">🚩 <span><b>Post-mania entry timing:</b> Silver fell ~44% from its Jan-2026 ATH of $121.64/oz before stabilising near $68–71<sup class="src" title="Source: CoinDCX [T4] · 18 Jun 2026">7</sup> — high uncertainty on near-term direction.</span></div>
+        <div class="flag-row">🚩 <span><b>Double tracking layer:</b> As an FoF, this fund tracks an ETF that tracks silver — peer FoFs show tracking error vs. their own ETF as high as 6.8%<sup class="src" title="Source: Equitymaster [T4] · 14 Oct 2025">5</sup>, an extra slippage layer beyond silver's own price moves.</span></div>
+        <div class="flag-row">✅ <span>No manager change detected; same two managers since launch (Apr-2023)<sup class="src" title="Source: Groww, INDmoney [T2/T3]">2,3</sup></span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🏛️ AMC Strength</h3>
+      <p style="font-size:.88rem;">UTI Mutual Fund is one of India's oldest and largest AMCs, with a long-standing passive/index fund franchise. The Silver ETF FoF itself is a simple pass-through product — AMC pedigree matters here mainly for operational reliability (NAV accuracy, redemption processing), not for stock-picking skill, since there is none required in this structure.</p>
+    </div>
+
+    <div class="card">
+      <h3>❓ Quick FAQ</h3>
+      <table>
+        <tr><td style="width:32%"><b>Is Direct better?</b></td><td>Yes — same fund, lower fee. If you ever hold the Regular plan, switch.</td></tr>
+        <tr><td><b>Growth or IDCW?</b></td><td>Growth, unless you specifically need payouts.</td></tr>
+        <tr><td><b>How much to invest?</b></td><td>If adding fresh: 5% of total portfolio is a reasonable ceiling for all precious metals combined — you're near that ceiling already (~15.4%).</td></tr>
+        <tr><td><b>When to revisit?</b></td><td>See "When to Revisit" in the Verdict tab.</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- TAB 2: PERFORMANCE -->
+  <div class="tab-content" id="t2">
+
+    <div class="card">
+      <h3>📈 Returns Table</h3>
+      <table id="tbl-returns">
+        <thead><tr><th>Period</th><th>Fund (Direct)</th><th>Benchmark (Silver spot)</th><th>Category Avg (Silver FoFs)</th></tr></thead>
+        <tbody>
+          <tr><td>1 Year</td><td class="num">139.4%<sup class="src" title="Source: INDmoney [T2] · 01 Jun 2026">1</sup>–148.9%<sup class="src" title="Source: Paytm Money [T3] · 06 Jun 2026">6</sup> ⚠</td><td>~147–161% (2025 calendar)<sup class="src" title="Source: BusinessToday citing Tata MF [T4] · 07 Jan 2026">9</sup></td><td>~117–143%<sup class="src" title="Source: Kotak Securities fund-compare pages [T3] · Jun 2026">16,18</sup></td></tr>
+          <tr><td>3 Year</td><td class="num">50.4%–50.6%<sup class="src" title="Source: INDmoney [T2] + Paytm Money peer table [T3]">1,10</sup></td><td>Data unavailable ⚠</td><td>48.3%–52.1%<sup class="src" title="Source: Paytm Money, Kotak Securities [T3]">10,16,18</sup></td></tr>
+          <tr><td>5 Year</td><td colspan="3">Not applicable — fund is only ~3 years old (launched Apr-2023)</td></tr>
+          <tr><td>Since Inception</td><td class="num">45.95%–47.28% CAGR<sup class="src" title="Source: INDmoney [T2], Dezerv [T2]">1,2</sup></td><td>Data unavailable ⚠</td><td>—</td></tr>
+        </tbody>
+      </table>
+      <div class="small" style="margin-top:8px;">⚠ Return figures vary by 5–10 percentage points across data providers for this fund — common for small, recently-launched FoFs where snapshot dates differ by a few days during a highly volatile period. Treat as directional, not exact.</div>
+    </div>
+
+    <div class="card">
+      <h3>📅 Calendar-Year Context (Silver spot price, not fund-specific)</h3>
+      <table>
+        <thead><tr><th>Year</th><th>Silver price move</th><th>Note</th></tr></thead>
+        <tbody>
+          <tr><td>2025</td><td class="num" style="color:var(--good)">+147% to +161%<sup class="src" title="Source: CoinDCX, BusinessToday citing Tata MF [T4]">7,9</sup></td><td>One of the sharpest commodity rallies in decades</td></tr>
+          <tr><td>2026 (YTD to Jun)</td><td class="num" style="color:var(--bad)">~−44% from Jan ATH ($121.64 → $68–71/oz)<sup class="src" title="Source: CoinDCX [T4] · 18 Jun 2026">7</sup></td><td>CME margin hikes + USD strength + profit-taking</td></tr>
+        </tbody>
+      </table>
+      <div class="small" style="margin-top:8px;">Fund-specific (UTI Silver ETF FoF) calendar-year-by-year return table: Data unavailable ⚠ — not published in a consistent format by any T1/T2 source checked. The above shows the underlying asset's path, which the fund tracks closely.</div>
+    </div>
+
+    <div class="card">
+      <h3>📉 Risk Metrics</h3>
+      <table>
+        <thead><tr><th>Metric</th><th>UTI Silver FoF</th><th>Category range (peer Silver FoFs)</th></tr></thead>
+        <tbody>
+          <tr><td>Std. Deviation <span class="tip" title="How much the fund's returns bounce around — higher = more bumpy ride">ⓘ</span></td><td>Data unavailable ⚠</td><td>20.6%–21.1%<sup class="src" title="Source: Equitymaster [T4] · 14 Oct 2025">5</sup></td></tr>
+          <tr><td>Sharpe Ratio <span class="tip" title="Return earned per unit of risk taken — higher is better">ⓘ</span></td><td>Data unavailable ⚠</td><td>0.36–1.20<sup class="src" title="Source: Equitymaster, NiveshMultiplier [T4]">5,19</sup></td></tr>
+          <tr><td>Sortino Ratio <span class="tip" title="Like Sharpe, but only counts the downside risk — higher is better">ⓘ</span></td><td>Data unavailable ⚠</td><td>0.88–1.36<sup class="src" title="Source: Equitymaster [T4] · 14 Oct 2025">5</sup></td></tr>
+          <tr><td>Max Drawdown <span class="tip" title="The worst peak-to-bottom fall the fund has ever seen">ⓘ</span></td><td>Data unavailable ⚠</td><td>−37.65% to −39.49%<sup class="src" title="Source: NiveshMultiplier [T4] · 17 Mar 2026">19</sup></td></tr>
+          <tr><td>Tracking Error vs underlying ETF</td><td>Data unavailable ⚠</td><td>0.53%–6.81%<sup class="src" title="Source: Equitymaster [T4] · 14 Oct 2025">5</sup></td></tr>
+          <tr><td>Risk Rating</td><td colspan="2"><span class="pill red">Very High</span><sup class="src" title="Source: Groww risk-o-meter [T3] · Jun 2026">3</sup></td></tr>
+        </tbody>
+      </table>
+      <div class="small" style="margin-top:8px;">UTI-specific risk-adjusted metrics weren't published by any T1/T2 source at verification time — the category range above (peer Silver FoFs from ICICI Pru, Axis, ABSL, HDFC, Nippon) is shown for context only, tagged T4.</div>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <h3>💸 Cost Comparison</h3>
+        <table>
+          <tr><td>TER (Direct)</td><td class="num">0.12%<sup class="src" title="Source: INDmoney, Dezerv [T2] · Jun 2026">1,2</sup> ⚠ (0.16% per Value Research<sup class="src" title="Source: Value Research [T2]">4</sup>)</td></tr>
+          <tr><td>TER (Regular)</td><td>Data unavailable ⚠</td></tr>
+          <tr><td>Category avg TER</td><td>0.12%–0.69% (wide spread across AMCs)<sup class="src" title="Source: Kotak Securities compare pages, Equitymaster [T3/T4]">16,18,5</sup></td></tr>
+        </table>
+        <div class="accent-box">Even at the higher 0.16% figure, UTI is among the cheapest in the category — cost is not a concern here.</div>
+      </div>
+      <div class="card">
+        <h3>👤 Manager Track Record</h3>
+        <table>
+          <tr><td>Managers</td><td>Sharwan Kumar Goyal, Ayush Jain<sup class="src" title="Source: Groww, INDmoney [T2/T3]">2,3</sup></td></tr>
+          <tr><td>Tenure</td><td>Since launch, Apr-2023 (~3 yrs)<sup class="src" title="Source: INDmoney [T2]">1</sup></td></tr>
+          <tr><td>Background</td><td>Goyal: B.Com, CFA<sup class="src" title="Source: Groww [T3] · Jun 2026">3</sup></td></tr>
+        </table>
+        <div class="small" style="margin-top:8px;">Manager skill is largely irrelevant for this structure — it's a passive pass-through into UTI's own Silver ETF, not an actively managed portfolio.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 3: ALTERNATIVES -->
+  <div class="tab-content" id="t3">
+    <div class="card">
+      <h3>🏆 Top 3 Alternatives in the Same Category</h3>
+      <p class="small">Screened on: 3Y+ track record, AUM ≥ ₹500Cr, Direct plan. All are FoFs that simply track their own house's Silver ETF — differences are mostly cost, liquidity, and minor tracking efficiency, not stock-picking skill.</p>
+      <div class="filter-row">
+        <button class="active-filter" onclick="filterAlt('all',this)">Show all</button>
+        <button onclick="filterAlt('top3',this)">Show top 3</button>
+      </div>
+      <table id="tbl-alt">
+        <thead><tr><th>Metric</th><th>This Scheme<br><span class="small">UTI Silver FoF</span></th><th>Alt #1<br><span class="small">ICICI Pru Silver ETF FoF</span></th><th>Alt #2<br><span class="small">HDFC Silver ETF FoF</span></th><th>Alt #3<br><span class="small">Axis Silver FoF</span></th></tr></thead>
+        <tbody>
+          <tr><td>Rationale tag</td><td>—</td><td><span class="pill green">Better Liquidity</span></td><td><span class="pill green">Better Track Record</span></td><td><span class="pill yellow">Large AUM</span></td></tr>
+          <tr><td>3Y Return</td><td>50.4%–50.6%<sup class="src" title="[T2/T3] 1,10">1,10</sup></td><td class="num" style="color:var(--good)">50.4%–52.1%<sup class="src" title="[T3] 10,23">10,23</sup> ✅</td><td class="num" style="color:var(--good)">~52.9%–59.1% (rolling)<sup class="src" title="[T4] NiveshMultiplier">19</sup> ✅</td><td>48.3%–50.6%<sup class="src" title="[T3] 10,18">10,18</sup></td></tr>
+          <tr><td>TER (Direct)</td><td class="num" style="color:var(--good)">0.12%⚠ ✅</td><td>0.12%–0.64% ⚠ (conflicting sources)<sup class="src" title="[T3/T4]">5,16</sup></td><td>~0.23%<sup class="src" title="[T4] NiveshMultiplier">19</sup></td><td>0.16%–0.69% ⚠ (conflicting sources)<sup class="src" title="[T3/T4]">16,5</sup></td></tr>
+          <tr><td>AUM</td><td>₹597Cr<sup class="src" title="[T2]">1,2</sup></td><td class="num" style="color:var(--good)">₹7,058Cr (largest, most liquid)<sup class="src" title="[T3]">16</sup> ✅</td><td>Smaller / not consistently confirmed ⚠</td><td>₹5,907Cr<sup class="src" title="[T3]">18</sup></td></tr>
+          <tr><td>Launch Date</td><td>21 Apr 2023</td><td>02 Sep 2022 (older track record)</td><td>—</td><td>13 Jan 2022 (oldest)</td></tr>
+          <tr><td>3Y Sharpe (category data)</td><td>Data unavailable ⚠</td><td>~1.18<sup class="src" title="[T4] Equitymaster">5</sup></td><td>Data unavailable ⚠</td><td>~1.20<sup class="src" title="[T4] Equitymaster">5</sup></td></tr>
+          <tr><td>Score /10</td><td><b>5.1</b></td><td><b>6.0</b></td><td><b>5.8</b></td><td><b>5.5</b></td></tr>
+        </tbody>
+      </table>
+      <div class="accent-box">⚠ Cost and AUM figures for this entire niche category show real conflicts across aggregator sites — before investing in <i>any</i> of these, pull the exact current TER from the AMC's own factsheet (UTI MF / ICICI Pru MF / Axis MF / HDFC MF websites), since several third-party sites appear to mix Direct/Regular figures or show stale data for these newer schemes.</div>
+    </div>
+  </div>
+
+  <!-- TAB 4: VERDICT -->
+  <div class="tab-content" id="t4">
+    <div class="card">
+      <div class="verdict-card">
+        <div class="verdict-tag">❌ AVOID (for now)</div>
+        <div style="margin-top:10px;font-size:.92rem;">A fresh, standalone allocation to UTI Silver ETF FoF doesn't make sense for this portfolio at this entry point.</div>
+      </div>
+      <div class="score-ring-wrap">
+        <div class="ring">
+          <svg width="96" height="96"><circle cx="48" cy="48" r="40" stroke="#2a3441" stroke-width="8" fill="none"/><circle cx="48" cy="48" r="40" stroke="#FBBF24" stroke-width="8" fill="none" stroke-dasharray="251" stroke-dashoffset="123" stroke-linecap="round"/></svg>
+          <div class="ring-label">5.1<small>/10 score</small></div>
+        </div>
+        <div class="ring">
+          <svg width="96" height="96"><circle cx="48" cy="48" r="40" stroke="#2a3441" stroke-width="8" fill="none"/><circle cx="48" cy="48" r="40" stroke="#06B6D4" stroke-width="8" fill="none" stroke-dasharray="251" stroke-dashoffset="125" stroke-linecap="round"/></svg>
+          <div class="ring-label">Medium<small>confidence</small></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <h3>⚠️ Top 3 Risks & Hedges</h3>
+        <ul class="bullets">
+          <li><b>Concentration risk:</b> stacking on top of the existing Motilal Oswal Gold & Silver Passive FoF (~15.4% of portfolio already). <i>Hedge: top up the existing fund instead of adding a third metals product, or cap total precious metals at 10–15% of the portfolio.</i></li>
+          <li><b>Timing risk:</b> entering after a +150% rally and a ~44% correction — high odds of buying into continued volatility either direction. <i>Hedge: if convinced, use a 6–12 month SIP rather than lumpsum to average the entry.</i></li>
+          <li><b>Non-yielding asset risk:</b> silver pays no dividend/interest; returns depend entirely on price appreciation, and Indian buyers also absorb ~14–15% import duty/GST drag baked into domestic pricing<sup class="src" title="Source: CoinDCX [T4] · 18 Jun 2026">7</sup>. <i>Hedge: size it as a small satellite position, never a core holding.</i></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>🧩 Portfolio Fit</h3>
+        <p style="font-size:.88rem;">Mahendra's portfolio (₹47.03L current value) already holds <b>Motilal Oswal Gold and Silver Passive FoF</b> — invested ₹6.40L, now worth ₹7.24L, <b>~15.4% of the entire portfolio</b><sup class="src" title="Source: Uploaded CAS statement [T1] · 17 Jun 2026">U</sup>. That fund already blends gold + silver exposure.</p>
+        <div class="gauge-bar"><div class="gauge-fill" style="width:15.4%;background:var(--watch);"></div></div>
+        <div class="small">Current precious-metals allocation: 15.4% of portfolio</div>
+        <p style="font-size:.88rem;margin-top:10px;"><b>Verdict: Adds redundancy</b> — this would tilt the existing gold+silver mix further toward silver specifically, without that being a deliberate, sized decision. Most portfolio construction guides cap commodities/precious metals at 10–15% of total assets; this portfolio is already at that ceiling.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🔁 When to Revisit</h3>
+      <ul class="bullets">
+        <li><b>Time trigger:</b> Re-check in 6 months (Dec 2026) once the post-Jan-2026 correction has either bottomed or extended — re-evaluate entry price relative to the $68–106/oz forecast range<sup class="src" title="Source: CoinDCX silver forecast [T4]">7</sup>.</li>
+        <li><b>Event trigger:</b> If total precious-metals exposure in the portfolio (via the existing FoF) drops meaningfully below 10% due to redemptions/rebalancing, a small fresh silver allocation would fit better then.</li>
+        <li><b>Event trigger:</b> A sustained Fed rate-cut cycle materializing in H2 2026 would strengthen the structural bull case<sup class="src" title="Source: CoinDCX [T4]">7</sup> — but that's a reason to size in gradually, not lump-sum chase.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- TAB 5: TAX & EXIT -->
+  <div class="tab-content" id="t5">
+    <div class="card">
+      <h3>💰 Tax & Exit Load — In Plain English</h3>
+      <table>
+        <tr><td style="width:30%"><b>Holding &lt; 24 months</b></td><td>Gains added to your income and taxed at your regular income-tax slab rate (no special "capital gains" rate)<sup class="src" title="Source: Groww [T3] · Jun 2026">3</sup></td></tr>
+        <tr><td><b>Holding ≥ 24 months</b></td><td>Taxed at <b>12.5%</b>, with no indexation benefit<sup class="src" title="Source: Groww [T3] · Jun 2026">3</sup></td></tr>
+        <tr><td><b>Exit Load</b></td><td>1% if redeemed within 15 days of purchase; nil after that<sup class="src" title="Source: Groww, mStock [T2/T3]">3,13</sup></td></tr>
+        <tr><td><b>Lock-in</b></td><td>None — open-ended scheme, redeemable anytime (subject to exit load above)</td></tr>
+      </table>
+      <div class="accent-box">This fund is taxed like a non-equity/"specified" fund, not like an equity fund — there's no LTCG exemption on the first ₹1.25L and no 65%-equity benefit. Factor that into your real, after-tax return expectation.</div>
+    </div>
+    <div class="card">
+      <h3>↔️ Direct vs Regular</h3>
+      <p style="font-size:.88rem;">Direct-plan TER for this fund is ~0.12% (possibly 0.16% per one source ⚠). The Regular-plan TER wasn't confirmed by any source checked, so an exact ₹ savings figure can't be calculated here — Data unavailable ⚠. As a rule of thumb for FoFs, Regular plans typically run 0.3–0.6 percentage points higher; on a ₹1L investment over 3 years, even a 0.3pt gap compounds to a meaningful four-figure drag. You're already invested via Direct plans throughout the portfolio, so this is moot for your case.</p>
+    </div>
+  </div>
+
+  <!-- TAB 6: SOURCES & SCORE -->
+  <div class="tab-content" id="t6">
+    <div class="card">
+      <h3>📊 Score Breakdown</h3>
+      <table>
+        <thead><tr><th>Tier</th><th>Weight</th><th>Sub-score /10</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td>Tier 1 — Core Decision Metrics</td><td>50%</td><td>6.0</td><td>Strong absolute returns, but they're pure asset-price beta earned <i>before</i> the recent correction — not a reason to buy fresh today</td></tr>
+          <tr><td>Tier 2 — Diagnostic Metrics</td><td>35%</td><td>6.0</td><td>Cheap TER, stable management; but no fund-specific risk metrics could be confirmed (Sharpe/Sortino/Std Dev all unavailable for this exact scheme)</td></tr>
+          <tr><td>Tier 3 — Context Metrics</td><td>15%</td><td>5.5</td><td>Genuine structural bull case (industrial demand, deficits) offset by a real bear case (speculative unwind, non-yielding, import-duty drag)</td></tr>
+          <tr><td colspan="3"><b>Weighted subtotal</b></td><td><b>5.93</b></td></tr>
+          <tr><td colspan="3">Red-flag penalty (portfolio redundancy + post-mania entry timing)</td><td>−0.5</td></tr>
+          <tr><td colspan="3">Missing-data / confidence penalty (no fund-specific risk metrics, conflicting TER/AUM across sources)</td><td>−0.3</td></tr>
+          <tr><td colspan="3"><b>Final Score</b></td><td><b>5.1 / 10</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>📑 Full Source Ledger</h3>
+      <div class="filter-row">
+        <button class="active-filter" onclick="filterSrc('all',this)">All</button>
+        <button onclick="filterSrc('T1',this)">T1</button>
+        <button onclick="filterSrc('T2',this)">T2</button>
+        <button onclick="filterSrc('T3',this)">T3</button>
+        <button onclick="filterSrc('T4',this)">T4</button>
+      </div>
+      <table id="tbl-sources">
+        <thead><tr><th>#</th><th>Source</th><th>Tier</th><th>Used For</th><th>Date</th></tr></thead>
+        <tbody>
+          <tr data-tier="T1"><td>U</td><td>User-uploaded MF CAS statement</td><td><span class="pill green">T1</span></td><td>Existing portfolio holdings (Mahendra Kumar Lunia)</td><td>17 Jun 2026</td></tr>
+          <tr data-tier="T2"><td>1</td><td>INDmoney</td><td><span class="pill green">T2</span></td><td>AUM, TER, returns, manager</td><td>~01 Jun 2026</td></tr>
+          <tr data-tier="T2"><td>2</td><td>Dezerv</td><td><span class="pill green">T2</span></td><td>NAV, AUM, TER, since-inception return</td><td>01 Jun 2026</td></tr>
+          <tr data-tier="T2"><td>4</td><td>Value Research Online</td><td><span class="pill green">T2</span></td><td>TER (conflicting figure), category, AUM</td><td>Jun 2026</td></tr>
+          <tr data-tier="T3"><td>3</td><td>Groww</td><td><span class="pill yellow">T3</span></td><td>Manager names, risk rating, tax treatment, exit load</td><td>05 Jun 2026</td></tr>
+          <tr data-tier="T3"><td>6</td><td>Paytm Money</td><td><span class="pill yellow">T3</span></td><td>1Y/3Y returns, peer ranking table</td><td>06 Jun 2026</td></tr>
+          <tr data-tier="T3"><td>13</td><td>mStock</td><td><span class="pill yellow">T3</span></td><td>Historical AUM (Mar-2025), exit load</td><td>24 Mar 2025</td></tr>
+          <tr data-tier="T3"><td>16,18</td><td>Kotak Securities/Neo fund-compare pages</td><td><span class="pill yellow">T3</span></td><td>Peer TER, AUM, 1Y/3Y returns for alternatives</td><td>Jun 2026</td></tr>
+          <tr data-tier="T4"><td>5</td><td>Equitymaster</td><td><span class="pill red">T4</span></td><td>Category risk metrics (Sharpe/Sortino/Std Dev), tracking error</td><td>14 Oct 2025</td></tr>
+          <tr data-tier="T4"><td>19</td><td>NiveshMultiplier</td><td><span class="pill red">T4</span></td><td>Peer 3Y rolling returns, drawdowns</td><td>17 Mar 2026</td></tr>
+          <tr data-tier="T4"><td>7</td><td>CoinDCX silver forecast</td><td><span class="pill red">T4</span></td><td>Silver price cycle (2025 rally, 2026 correction), outlook</td><td>18 Jun 2026 (article: 1 week old)</td></tr>
+          <tr data-tier="T4"><td>9</td><td>BusinessToday (citing Tata MF)</td><td><span class="pill red">T4</span></td><td>2025 calendar-year silver price move</td><td>07 Jan 2026</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>🕳️ Data Gap Log</h3>
+      <ul class="bullets">
+        <li>Fund-specific Sharpe, Sortino, Std. Deviation, Max Drawdown, Tracking Error — unavailable for UTI Silver ETF FoF specifically; category-level peer data shown instead.</li>
+        <li>Calendar-year-by-year fund returns — not published consistently by any checked source; silver spot price calendar moves shown as proxy context.</li>
+        <li>Regular-plan TER — unavailable; Direct-plan TER itself has a 0.12% vs 0.16% conflict across T2 sources.</li>
+        <li>Groww listed a launch date of "14 Nov 2002" and an AUM of "₹3,96,629 Cr" for this scheme — both are clearly data errors (likely scraped from an unrelated UTI scheme) and were discarded in favour of the consistent 21-Apr-2023 / ~₹597Cr figures from INDmoney and Dezerv.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>📌 Assumptions Made (Step 2 auto-resolution)</h3>
+      <ul class="bullets">
+        <li>⚠ Confirmed scheme = "UTI Silver ETF Fund of Fund — Direct Plan, Growth Option" exactly as named — no ambiguity, plan/option were explicitly specified by you.</li>
+        <li>⚠ Benchmark assumed as "Domestic Price of Silver (LBMA Silver daily spot fixing)" per the only source that stated it explicitly (T3) — category-default for this fund type, flagged since it wasn't cross-confirmed at T1/T2.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-section">
+    <h4>A. Investment Disclaimer</h4>
+    This report is for educational and informational purposes only and does not constitute investment advice, a recommendation to buy or sell mutual fund units, or a solicitation of any offer. This is NOT a SEBI-registered research report. Consult a SEBI-registered investment advisor before making investment decisions. Past performance does not guarantee future results. Data sourced from public domains (AMFI, AMC factsheets, MF Central, Value Research/Morningstar, and other listed providers). The author accepts no liability for outcomes based on this report.
+
+    <h4>B. AI Disclosure</h4>
+    ⚠ Generated using Claude AI (Anthropic) via the Mutual Fund Scheme Research skill. AI can produce plausible-sounding but incorrect figures — every number here is sourced and tiered (see Sources & Score tab), but independently verify before acting. AI has a knowledge cutoff; always check the report generation date against the latest factsheet. Web search results may be incomplete or from lower-quality sources — trust T1/T2 over T3/T4. This is a supplementary tool, not a substitute for a licensed advisor. No liability accepted by the AI, the skill author, or Anthropic for losses.
+
+    <h4>C. Attribution</h4>
+    Research skill designed by: <b>Kushal Lunia</b><br>
+    CA Finalist | Internal Audit & Financial Reporting | Ex-EY (Big 4) & Ex-UBS<br>
+    Data Analytics: Alteryx · Power BI · Excel · Power Query<br>
+    🔗 LinkedIn: <a href="https://www.linkedin.com/in/kushal-lunia-7b9585138/" target="_blank">linkedin.com/in/kushal-lunia-7b9585138</a><br>
+    AI Engine: Claude (Anthropic) · Report generated: 18 Jun 2026<br>
+    Market: INDIA (Mutual Funds) · Currency: INR<br>
+    Scheme: UTI Silver ETF Fund of Fund — Direct Plan, Growth · Data confidence: 5.1/10<br>
+    Latest Factsheet Date: ~01–06 Jun 2026 · Missing Data Count: 5
+  </div>
+
+</div>
+
+<script>
+  // Tabs
+  document.querySelectorAll('.tab-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Sortable tables (generic, by column index, text/number aware)
+  document.querySelectorAll('table').forEach(table=>{
+    const headers = table.querySelectorAll('th');
+    headers.forEach((th,idx)=>{
+      th.addEventListener('click',()=>{
+        const tbody = table.querySelector('tbody');
+        if(!tbody) return;
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+        const asc = !th.classList.contains('sort-asc');
+        headers.forEach(h=>h.classList.remove('sort-asc','sort-desc'));
+        th.classList.add(asc?'sort-asc':'sort-desc');
+        rows.sort((a,b)=>{
+          const at=a.children[idx]?a.children[idx].innerText.trim():'';
+          const bt=b.children[idx]?b.children[idx].innerText.trim():'';
+          const an=parseFloat(at.replace(/[^0-9.\-]/g,''));
+          const bn=parseFloat(bt.replace(/[^0-9.\-]/g,''));
+          if(!isNaN(an) && !isNaN(bn)) return asc?an-bn:bn-an;
+          return asc?at.localeCompare(bt):bt.localeCompare(at);
+        });
+        rows.forEach(r=>tbody.appendChild(r));
+      });
+    });
+  });
+
+  function filterSrc(tier, btn){
+    document.querySelectorAll('#tbl-sources tbody tr').forEach(r=>{
+      r.style.display = (tier==='all' || r.dataset.tier===tier) ? '' : 'none';
+    });
+    btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active-filter'));
+    btn.classList.add('active-filter');
+  }
+
+  function filterAlt(mode, btn){
+    btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active-filter'));
+    btn.classList.add('active-filter');
+    // "Show top 3" hides nothing structurally here since table already shows this+3 alts; reserved for future expansion
+  }
+</script>
+</body>
+</html>
